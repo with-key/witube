@@ -1,7 +1,7 @@
-# Plan
+# Router Plan
 
-- 라우터 나누기
-  
+## 라우터 나누기
+---
  / -> Home
  /join -> Join
  /login -> Login
