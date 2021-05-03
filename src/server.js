@@ -14,6 +14,7 @@ const handleListening = () =>
   console.log(`Server listening on port http://localhost:${PORT}`);
 
 app.use(logger('dev'));
+// app.use() 에 넣은 미들웨어는 모든 경로에서 실행된다.
 app.get('/', handleHome);
 app.get('/login', handleLogin);
 app.listen(PORT, handleListening);
