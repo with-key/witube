@@ -2,20 +2,26 @@ import express from 'express';
 import logger from 'morgan';
 const PORT = 4000;
 const app = express();
+app.use(logger('dev'));
 
-const handleHome = (req, res) => {
-  return res.send('this is the controller!');
-};
-const handleLogin = (req, res) => {
-  return res.send('this is the login page!');
-};
+// Router
+const globalRouter = express.Router();
+const handleHome = (req, res) => res.send('Home');
+globalRouter.get('/', handleHome);
+
+const userRouter = express.Router();
+const handleEditUser = (req, res) => res.send('Edit User');
+userRouter.get('/edit', handleEditUser);
+
+const videoRouter = express.Router();
+const handleWatchVideo = (req, res) => res.send('Watch Vides');
+videoRouter.get('/watch', handleWatchVideo);
+
+app.use('/', globalRouter);
+app.use('/videos', videoRouter);
+app.use('/users', userRouter);
 
 const handleListening = () =>
   console.log(`Server listening on port http://localhost:${PORT}`);
 
-app.use(logger('dev'));
-// app.use() 에 넣은 미들웨어는 모든 경로에서 실행된다.
-app.get('/', handleHome);
-app.get('/login', handleLogin);
 app.listen(PORT, handleListening);
-// listen은 콜백함수를 인자로 받는다. 인자로 받은 콜백함수를 실행한다.
