@@ -1,25 +1,15 @@
 import express from 'express';
+import globalRouter from './routers/globalRouter';
+import userRouter from './routers/userRouter';
+import videoRouter from './routers/videoRouter';
 import logger from 'morgan';
 const PORT = 4000;
 const app = express();
-app.use(logger('dev'));
+app.use(logger('dev')); //모든 경로에 logger 미들웨어를 실행시킴
 
-// Router
-const globalRouter = express.Router();
-const handleHome = (req, res) => res.send('Home');
-globalRouter.get('/', handleHome);
-
-const userRouter = express.Router();
-const handleEditUser = (req, res) => res.send('Edit User');
-userRouter.get('/edit', handleEditUser);
-
-const videoRouter = express.Router();
-const handleWatchVideo = (req, res) => res.send('Watch Vides');
-videoRouter.get('/watch', handleWatchVideo);
-
-app.use('/', globalRouter);
-app.use('/videos', videoRouter);
+app.use('/', globalRouter); // globalRouter 를 '/'의 하위로 그룹화 시킴
 app.use('/users', userRouter);
+app.use('/videos', videoRouter);
 
 const handleListening = () =>
   console.log(`Server listening on port http://localhost:${PORT}`);
