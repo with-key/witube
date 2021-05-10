@@ -3,6 +3,7 @@ import globalRouter from './routers/globalRouter';
 import userRouter from './routers/userRouter';
 import videoRouter from './routers/videoRouter';
 import logger from 'morgan';
+
 const PORT = 4000;
 const app = express();
 app.use(logger('dev')); //모든 경로에 logger 미들웨어를 실행시킴
