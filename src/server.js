@@ -8,7 +8,7 @@ const PORT = 4000;
 const app = express();
 
 app.use(logger('dev')); //모든 경로에 logger 미들웨어를 실행시킴
-app.set('view engine', 'pug'); // pug 설정
+app.set('view engine', 'pug'); // pug 설정 (template engine == flask jinja)
 
 app.use('/', globalRouter); // globalRouter 를 '/'의 하위로 그룹화 시킴
 app.use('/users', userRouter);
