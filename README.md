@@ -1,20 +1,20 @@
-# Router Plan
+# Youtube Clone
 
-## 라우터 나누기
----
- / -> Home
- /join -> Join
- /login -> Login
- /search -> Search
+## index
+- language : node (framework - express)
+- teamplate engine : pug
+- db : mongoDB
+- deploy
+  - AWS S3
+  - Heroku
 
- /users/:id -> See User
- /users/logout -> Log out
- /users/edit -> Edit My Profile
- /users/delete -> Delete My Profile
-
- /videos/:id -> See Video
- /videos/:id/edit -> Edit Video
- /videos/:id/delete -> Delete Video
- /videos/upload -> Upload Video
-
- 
+## Aim
+- express (get, post, router)
+- Using express, CRUD function
+- webpack
+- feature
+  - video player
+  - comments
+  - authentication (Using session and cookies, github auth) & User profile
+  - videos recoder, file downloading
+- SCSS
