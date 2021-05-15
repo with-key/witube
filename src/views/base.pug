@@ -5,10 +5,23 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        block head
+        //- 👇 mvp style (기본적인 스타일링)
+        link(rel="stylesheet" href="https://unpkg.com/mvp.css") 
+        title #{pageTitle} | WiTube
+        
     body 
-    //- 다른 페이지에서 이 페이지를 extends한 경우, block에 원하는 값을 넣을 수 있다
-    block content
-    //- react components 처럼 가져와서 사용할 수 있다
-    include partials/footer.pug
-    
+        header
+            //- pug에서 if문
+            nav
+                ul
+                    if fakeUser.loggedIn
+                        li
+                            a(href="/login") Logout 
+                    else 
+                        li
+                            a(href="/login") Login 
+                        
+            h1=pageTitle 
+        main 
+            block content
+        include partials/footer.pug
