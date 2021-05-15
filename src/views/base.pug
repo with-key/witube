@@ -10,17 +10,7 @@ html(lang="en")
         title #{pageTitle} | WiTube
         
     body 
-        header
-            //- pug에서 if문
-            nav
-                //- ul
-                //-     if fakeUser.loggedIn
-                //-         li
-                //-             a(href="/login") Logout 
-                //-     else 
-                //-         li
-                //-             a(href="/login") Login 
-                        
+        header  
             h1=pageTitle 
         main 
             block content
