@@ -1,6 +1,15 @@
-extends base.pug
+extends base
+include mixin/video
+
 block content
     h2 Welcome here you will see the trending videos! 
-    label(for="") 이름 
-    input(type="text", name="" placeholder="whats your name?")
-    button 보내기
+    ul 
+        each banana in videos 
+            +video(banana)
+        else
+            h3 Sorry, nothing found..
+                
+                
+                
+        
+    
