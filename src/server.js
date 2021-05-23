@@ -1,8 +1,10 @@
+import './db';
+import Video from './model/Video';
 import express from 'express';
+import logger from 'morgan';
 import globalRouter from './routers/globalRouter';
 import userRouter from './routers/userRouter';
 import videoRouter from './routers/videoRouter';
-import logger from 'morgan';
 
 const PORT = 4000;
 const app = express();
@@ -15,7 +17,7 @@ app.set('views', process.cwd() + '/src/views'); // views fold의 default cwd를 
 // ---- middle ware 설정
 app.use(logger('dev')); //모든 경로에 logger 미들웨어를 실행시킴
 // ----
-
+app.use(express.urlencoded({ extended: true }));
 // ---- router 설정 ---->
 app.use('/', globalRouter); // globalRouter 를 '/'의 하위로 그룹화 시킴
 app.use('/users', userRouter);

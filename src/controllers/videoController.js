@@ -43,7 +43,29 @@ export const watch = (req, res) => {
   });
 };
 
-export const search = (req, res) => res.send('search');
-export const edit = (req, res) => res.send('edit');
-export const upload = (req, res) => res.send('upload');
-export const deleteVideo = (req, res) => res.send('deleteVideo');
+export const getEdit = (req, res) => {
+  const { id } = req.params;
+  const video = videos[id - 1];
+  return res.render('edit', { pageTitle: `Editing ${video.title}`, video });
+};
+
+export const postEdit = (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+  videos[id - 1].title = title;
+  return res.redirect(`/videos/${id}`);
+};
+
+export const getUpload = (req, res) => {
+  const { id } = req.params;
+  return res.render('upload', { pageTitle: 'Upload Page!' });
+};
+
+export const postUpload = (req, res) => {
+  const { title } = req.body;
+  const newVideo = {
+    title,
+  };
+  videos.push(newVideo);
+  return res.redirect('/');
+};
