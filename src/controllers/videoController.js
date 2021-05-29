@@ -23,6 +23,7 @@ export const watch = async (req, res) => {
 export const getEdit = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
+  console.log(video.hashtags);
   return res.render('edit', { pageTitle: `Editing ${video.title}`, video });
 };
 
@@ -33,21 +34,33 @@ export const postEdit = async (req, res) => {
   // form.body에서 받은 내용 확인
   const { title, description, hashtags } = req.body;
   // 요청 받은 페이지의 id가 가진 값을 가져와서
-  const video = await Video.findById(id);
-  console.log(`video`, video);
-
-  if (video === null) {
+  // const video = await Video.findById();
+  const video = await Video.exists({ _id: id });
+  if (!video) {
     // 그 id에 데이터가 정상적으로 존재하지 않는다면, 404를 띄우고
     return res.render('404', { pageTitle: 'Video Not found' });
   }
   // 정상적이라면, 제목, 내용, 해시태그를 form.body에서 받은 내용으로 수정해서
-  video.title = title;
-  video.description = description;
-  video.hashtags = hashtags.split(',').map((word) => `#${word}`);
-  // db 에 저장 후 기다린다음 (await)
-  await video.save();
-  // 저장이 완료되면, redirecting 한다.
+  // 1. mongoose model method를 이용하는 방법
+  // findByIdAndUpdate를 사용하고 파라미터에 id와 수정할 대상에 req.body를 담는다.
+  await Video.findByIdAndUpdate(id, {
+    title,
+    description,
+    hashtags: Video.formatHashtags(hashtags),
+  });
   return res.redirect(`/videos/${id}`);
+
+  // 2. rawble 한 방법
+  // video.title = title;
+  // video.description = description;
+  // video.hashtags = hashtags
+  // .split(',')
+  // startsWith : 스트링이 시작하는 문자열을 확인해서 boolean을 reutrn
+  // .map((word) => (word.startsWith('#') ? word : `#${word}`));
+  // db 에 저장 후 기다린다음 (await)
+  // await video.save();
+  // 저장이 완료되면, redirecting 한다.
+  // return res.redirect(`/videos/${id}`);
 };
 
 export const getUpload = (req, res) => {
@@ -57,11 +70,12 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
+  console.log(title, description, hashtags);
   try {
     await Video.create({
       title,
       description,
-      hashtags: hashtags.split(',').map((word) => `#${word}`),
+      hashtags: Video.formatHashtags(hashtags),
     });
   } catch (e) {
     return res.render('upload', {
