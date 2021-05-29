@@ -4,13 +4,13 @@ import mongoose from 'mongoose';
 // 스키마의 각 타입으로 데이터를 자동변환한다. ex. title에 number를 받아도, 몽구스가 string으로 변환해서 저장한다.
 // 정보의 타입을 잘못보내면, 해당 데이터를 몽구스는 수집하지 않는다.
 const videoSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  createdAt: Date,
-  hashtags: [{ type: String }],
+  title: { type: String, required: true, trim: true },
+  description: { type: String, required: true, trim: true },
+  createdAt: { type: Date, required: true, default: Date.now() },
+  hashtags: [{ type: String, trim: true }],
   meta: {
-    views: Number,
-    rating: Number,
+    views: { type: Number, default: 0 },
+    rating: { type: Number, default: 0 },
   },
 });
 
