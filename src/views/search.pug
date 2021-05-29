@@ -1,6 +1,14 @@
 extends base
+include mixin/video
+
 
 block content
     form(method="GET") 
         input(placeholder="search by title!", name="q")
         button(type="submit") search now!
+
+    each video in videos
+        +video(video)
+    else
+        <br>
+        h3 Sorry, nothing found..
