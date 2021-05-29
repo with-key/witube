@@ -5,13 +5,15 @@ import {
   postEdit,
   getUpload,
   postUpload,
+  deleteVideo,
 } from '../controllers/videoController';
 
 const videoRouter = express.Router();
 
-videoRouter.route('/upload').get(getUpload).post(postUpload);
-videoRouter.route('/:id([0-9a-f]{24})/edit').get(getEdit).post(postEdit);
-videoRouter.get('/:id([0-9a-f]{24})', watch); // Regex를 이용한 url parameter 제어
+videoRouter.route('/upload').get(getUpload).post(postUpload); // create
+videoRouter.route('/:id([0-9a-f]{24})/edit').get(getEdit).post(postEdit); // update
+videoRouter.route('/:id([0-9a-f]{24})/delete').get(deleteVideo); // delete
+videoRouter.get('/:id([0-9a-f]{24})', watch);
 
 // <-- 코드 refactoring -->
 // <-- videoRouter.get('/:id/edit', getEdit); -->
