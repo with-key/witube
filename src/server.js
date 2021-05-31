@@ -2,7 +2,7 @@
 
 import express from 'express';
 import logger from 'morgan';
-import globalRouter from './routers/globalRouter';
+import rootRouter from './routers/rootRouter';
 import userRouter from './routers/userRouter';
 import videoRouter from './routers/videoRouter';
 
@@ -17,7 +17,7 @@ app.use(logger('dev')); //모든 경로에 logger 미들웨어를 실행시킴
 app.use(express.urlencoded({ extended: true })); // view input에서 form action으로 post했을 때, 백엔드에서 input name으로 된 객체를 받게 하는 설정
 
 // ---- router 설정 ---->
-app.use('/', globalRouter); // globalRouter 를 '/'의 하위로 그룹화 시킴
+app.use('/', rootRouter); // rootRouter 를 '/'의 하위로 그룹화 시킴
 app.use('/users', userRouter);
 app.use('/videos', videoRouter);
 
